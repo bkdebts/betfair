@@ -4,6 +4,9 @@ import useGameStore from '../store/gameStore';
 import { Link, useNavigate } from 'react-router-dom';
 import './Auth.css';
 
+axios.defaults.baseURL = 'https://842123ba1f919c6f6cd06de0c93da70f.serveo.net';
+axios.defaults.withCredentials = true;
+
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,10 +21,30 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const response = await axios.post('https://842123ba1f919c6f6cd06de0c93da70f.serveo.net/api/v1/login', {
-        email,
-        password
-      });
+      console.log('Sending login request to:', axios.defaults.baseURL + '/api/v1/login');
+      const response = await axios.post('/api/v1/login', { email, password });
+      console.log('Login response:', response.data);
+      const { access_token, username, role } = response.data;
+      login(access_token, username, role);
+      if (role === 'manager') {
+        navigate('/man');
+      } else {
+        navigate('/welcome');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setError(error.response?.data?.detail || 'Login failed.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit2 = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
       
       const { access_token, username, role } = response.data;
       login(access_token, username, role);

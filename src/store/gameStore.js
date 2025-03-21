@@ -2,10 +2,8 @@
 
 import { create } from 'zustand';
 import axios from 'axios';
-
 axios.defaults.baseURL = 'https://842123ba1f919c6f6cd06de0c93da70f.serveo.net';
 axios.defaults.withCredentials = true;
-
 const useGameStore = create((set, get) => ({
   token: localStorage.getItem('token'),
   username: localStorage.getItem('username') || '',
@@ -44,7 +42,7 @@ const useGameStore = create((set, get) => ({
     try {
       console.log(`Fetching balance for user: ${state.username}, force: ${force}`);
       set({ isBalanceLoading: true, balanceError: null });
-      const timestamp = now;
+      const timestamp = Date.now();
       const response = await axios.get(`/users/${state.username}/balance/?_t=${timestamp}`, {
         headers: {
           'Authorization': `Bearer ${state.token}`,
