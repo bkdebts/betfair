@@ -18,7 +18,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/login', {
+      const response = await axios.post('https://842123ba1f919c6f6cd06de0c93da70f.serveo.net/api/v1/login', {
         email,
         password
       });
