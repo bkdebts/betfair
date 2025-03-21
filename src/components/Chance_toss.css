@@ -1,0 +1,509 @@
+.chance-toss-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #fff;
+    padding: 2rem;
+    position: relative;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.game-header h1 {
+    font-size: 3rem;
+    background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.back-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.game-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Coin Section */
+.coin-section {
+    perspective: 1000px;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 50px auto;
+}
+
+.coin {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    transform-style: preserve-3d;
+    transition: transform 0.1s linear;
+}
+
+.coin.flipping {
+    animation: flip-coin 3s ease-out forwards;
+}
+
+.coin-side {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: linear-gradient(45deg, #ffd700, #ffcc00);
+    box-shadow: 
+        inset 0 0 15px rgba(0,0,0,0.5),
+        0 0 20px rgba(255,215,0,0.3);
+    border: 8px solid #daa520;
+}
+
+.coin-side::before {
+    content: '';
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 60%);
+}
+
+.coin-side.heads {
+    transform: rotateY(0deg);
+    background-image: 
+        linear-gradient(45deg, #ffd700, #ffcc00),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50%" y="50%" font-size="40" text-anchor="middle" dy=".35em" fill="%23b8860b">H</text></svg>');
+}
+
+.coin-side.tails {
+    transform: rotateY(180deg);
+    background-image: 
+        linear-gradient(45deg, #ffd700, #ffcc00),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/svg" viewBox="0 0 100 100"><text x="50%" y="50%" font-size="40" text-anchor="middle" dy=".35em" fill="%23b8860b">T</text></svg>');
+}
+
+@keyframes flip-coin {
+    0% {
+        transform: rotateX(0) translateY(0);
+        animation-timing-function: ease-in;
+    }
+    25% {
+        transform: rotateX(1080deg) translateY(-100px);
+    }
+    50% {
+        transform: rotateX(2160deg) translateY(0);
+        animation-timing-function: ease-out;
+    }
+    75% {
+        transform: rotateX(2520deg) translateY(-30px);
+    }
+    100% {
+        transform: rotateX(2880deg) translateY(0);
+    }
+}
+
+/* Betting Section */
+.betting-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.balance-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: rgba(0, 242, 254, 0.1);
+    border-radius: 10px;
+}
+
+.balance-amount {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4facfe;
+}
+
+.bet-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.bet-amount-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.bet-amount-section input {
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.quick-bets {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 0.5rem;
+}
+
+.quick-bet-btn {
+    background: rgba(79, 172, 254, 0.1);
+    border: 1px solid rgba(79, 172, 254, 0.3);
+    padding: 0.5rem;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quick-bet-btn:hover {
+    background: rgba(79, 172, 254, 0.2);
+    transform: translateY(-2px);
+}
+
+.choice-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.choice-btn {
+    padding: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    background: transparent;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.choice-btn.selected {
+    border-color: #4facfe;
+    background: rgba(79, 172, 254, 0.2);
+}
+
+.choice-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    border-color: #4facfe;
+}
+
+.choice-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.toss-btn {
+    background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
+    border: none;
+    padding: 1rem;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.toss-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+}
+
+.toss-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Result Overlay */
+.result-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+}
+
+.result-overlay h2 {
+    margin: 0;
+    font-size: 2.5rem;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.result-overlay h2.win {
+    color: #4CAF50;
+    animation: win-pulse 1s ease-in-out infinite;
+}
+
+.result-overlay h2.lose {
+    color: #f44336;
+    animation: lose-shake 0.5s ease-in-out;
+}
+
+.result-overlay .profit {
+    font-size: 2rem;
+    color: #4CAF50;
+    margin-top: 10px;
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    animation: profit-bounce 0.5s ease-out;
+}
+
+@keyframes win-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes lose-shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+
+@keyframes profit-bounce {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Coin Shadow */
+.coin::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    filter: blur(5px);
+    animation: shadow-animation 3s ease-out forwards;
+}
+
+@keyframes shadow-animation {
+    0% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+    25% {
+        transform: translateX(-50%) scale(0.5);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+    75% {
+        transform: translateX(-50%) scale(0.8);
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Sparkle Effects */
+.coin-side::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 5%),
+        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 5%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 30%);
+    animation: sparkle 2s linear infinite;
+}
+
+@keyframes sparkle {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.4; }
+}
+
+/* Environment Reflection */
+.coin-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    background: 
+        radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%);
+    animation: environment-reflection 5s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes environment-reflection {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* History Section */
+.history-section {
+    grid-column: span 2;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.history-section h3 {
+    margin-bottom: 1.5rem;
+    color: #4facfe;
+    font-size: 1.5rem;
+}
+
+.history-table {
+    overflow-x: auto;
+}
+
+.history-table table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+}
+
+.history-table th {
+    padding: 1rem;
+    text-align: left;
+    color: #8a8aa3;
+    font-weight: normal;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.history-table td {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.history-table tr td:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+.history-table tr td:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.history-table tr.win td {
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.history-table tr.lose td {
+    background: rgba(244, 67, 54, 0.1);
+}
+
+.history-table td.win {
+    color: #4CAF50;
+}
+
+.history-table td.lose {
+    color: #f44336;
+}
+
+/* Error Message */
+.error-message {
+    color: #f44336;
+    text-align: center;
+    margin: 1rem 0;
+    padding: 0.5rem;
+    background: rgba(244, 67, 54, 0.1);
+    border-radius: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .game-content {
+        grid-template-columns: 1fr;
+    }
+
+    .history-section {
+        grid-column: span 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .chance-toss-container {
+        padding: 1rem;
+    }
+
+    .game-header h1 {
+        font-size: 2rem;
+    }
+
+    .coin {
+        width: 150px;
+        height: 150px;
+    }
+
+    .quick-bets {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+} 

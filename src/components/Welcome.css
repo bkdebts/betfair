@@ -1,0 +1,557 @@
+.welcome-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Game Animation Styles */
+/*
+.game-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    z-index: 1000;
+    animation: fadeIn 0.5s ease-out;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.game-animation.fade-out {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+}
+
+.circle-path {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    border: 2px solid rgba(255, 0, 0, 0.2);
+    border-radius: 50%;
+    animation: rotate 3s linear infinite;
+}
+
+.circle-path::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: 2px solid rgba(255, 0, 0, 0.1);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.plane {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    transform-origin: center;
+    animation: counterRotate 3s linear infinite;
+}
+
+.plane-body {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    background: #ff0000;
+    border-radius: 5px;
+    transform: rotate(-45deg);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+.plane-wing {
+    position: absolute;
+    width: 20px;
+    height: 5px;
+    background: #ff0000;
+    border-radius: 3px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.plane-tail {
+    position: absolute;
+    width: 8px;
+    height: 5px;
+    background: #ff0000;
+    border-radius: 3px;
+    top: 50%;
+    right: -5px;
+    transform: translateY(-50%);
+}
+
+.plane-propeller {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #ff0000;
+    border-radius: 50%;
+    top: 50%;
+    left: -8px;
+    transform: translateY(-50%);
+    animation: spin 0.2s linear infinite;
+}
+
+.multiplier {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    font-weight: bold;
+    color: #ff0000;
+    text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    animation: scale 1s ease-in-out infinite;
+}
+*/
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes counterRotate {
+    from {
+        transform: rotate(0deg) translate(200px) rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg) translate(200px) rotate(-360deg);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: translateY(-50%) rotate(0deg);
+    }
+    to {
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
+
+@keyframes scale {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.welcome-content {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease-out;
+}
+
+.welcome-content.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.welcome-content h1 {
+    color: #fff;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(90deg, #ff0000 0%, #ff6b6b 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.balance-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.balance-display {
+    background: rgba(255, 0, 0, 0.1);
+    padding: 1.5rem 2rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 300px;
+}
+
+.balance-label {
+    color: #8a8aa3;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.balance-value {
+    color: #ff0000;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+}
+
+.welcome-content p {
+    color: #8a8aa3;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+/* Game Buttons Container */
+.game-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Common Game Button Styles */
+.game-btn {
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    padding: 1.5rem;
+    border-radius: 15px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    backdrop-filter: blur(5px);
+}
+
+.game-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: 0.5s;
+}
+
+.game-btn:hover::before {
+    transform: translateX(100%);
+}
+
+.game-emoji {
+    font-size: 2.5rem;
+    transition: transform 0.3s ease;
+}
+
+.game-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Individual Game Button Styles */
+.fate-shuffle {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff0000 100%);
+}
+
+.fate-shuffle:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(255, 0, 0, 0.3);
+}
+
+.fate-shuffle:hover .game-emoji {
+    transform: rotate(360deg);
+}
+
+.minemyst {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+}
+
+.minemyst:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+}
+
+.minemyst:hover .game-emoji {
+    transform: scale(1.2);
+}
+
+.aviator {
+    background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+}
+
+.aviator:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(33, 150, 243, 0.3);
+}
+
+.aviator:hover .game-emoji {
+    transform: translateX(10px);
+}
+
+.chance-toss {
+    background: linear-gradient(135deg, #FFC107 0%, #FFA000 100%);
+}
+
+.chance-toss:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(255, 193, 7, 0.3);
+}
+
+.chance-toss:hover .game-emoji {
+    transform: rotate(180deg);
+}
+
+/* Top Up Button Styles */
+.top-up-btn {
+    background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%);
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+}
+
+.top-up-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.top-up-btn:hover::before {
+    left: 100%;
+}
+
+.top-up-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(156, 39, 176, 0.4);
+}
+
+.top-up-emoji {
+    font-size: 1.5rem;
+    animation: pulse 2s infinite;
+}
+
+.settings-section {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    padding: 1rem;
+}
+
+.settings-btn {
+    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 15px;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.settings-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.settings-emoji {
+    font-size: 1.5rem;
+}
+
+.settings-text {
+    font-size: 1rem;
+}
+
+/* Add hover animations for emojis */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Add a glow effect to buttons on hover */
+.game-btn:hover, .top-up-btn:hover {
+    filter: brightness(1.1);
+}
+
+/* Add responsive styles for the balance section */
+@media (max-width: 768px) {
+    .balance-section {
+        padding: 1rem;
+    }
+    
+    .balance-display {
+        padding: 1rem;
+    }
+    
+    .balance-value {
+        font-size: 2rem;
+    }
+    
+    .top-up-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .settings-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .settings-emoji {
+        font-size: 1.3rem;
+    }
+
+    .game-buttons {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 1rem;
+    }
+}
+
+/* Add a subtle glow effect to the balance section */
+.balance-section {
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.1);
+}
+
+/* Enhance the background animation */
+.welcome-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(255, 0, 0, 0.15) 0%, transparent 70%);
+    animation: pulse 4s ease-in-out infinite;
+    z-index: -1;
+}
+
+/*
+.plane-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.plane {
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  background-size: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+.plane.lift-nose {
+  transform: rotate(-10deg);
+}
+
+.explosion {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  z-index: 10;
+}
+*/

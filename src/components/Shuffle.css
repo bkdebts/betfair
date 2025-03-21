@@ -1,0 +1,1035 @@
+/* Shuffle Game Container */
+.shuffle-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.shuffle-container::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%239C92AC' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+    opacity: 0.5;
+    animation: backgroundShift 30s linear infinite;
+    pointer-events: none;
+}
+
+/* Header and Title */
+.shuffle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 2rem;
+}
+
+.shuffle-title {
+    font-size: 3.5rem;
+    background: linear-gradient(45deg, #FFD700, #FFA500, #FF8C00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px 10px rgba(255, 215, 0, 0.3);
+    font-weight: 800;
+    letter-spacing: 2px;
+    position: relative;
+    animation: titlePulse 3s ease-in-out infinite;
+}
+
+.back-home-btn {
+    background: linear-gradient(45deg, #e94560, #c80638);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.back-home-btn::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%
+    );
+    transform: rotate(45deg);
+    animation: buttonShine 3s infinite linear;
+}
+
+.back-home-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 7px 20px rgba(233, 69, 96, 0.6);
+}
+
+.back-home-btn:active {
+    transform: translateY(-2px);
+}
+
+/* Balance Display */
+.balance-display {
+    background: rgba(15, 52, 96, 0.6);
+    border-radius: 15px;
+    padding: 1rem 2rem;
+    margin: 1rem 0 2rem;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+    font-size: 1.2rem;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.balance-label {
+    color: #FFD700;
+    font-weight: bold;
+}
+
+.balance-value {
+    color: white;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Cards Container */
+.cards-container {
+    position: relative;
+    min-height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin: 40px 0;
+    padding-bottom: 80px;
+}
+
+.cards-container::after {
+    content: '';
+    position: absolute;
+    width: 140%;
+    height: 140%;
+    background: radial-gradient(circle at center, rgba(255,215,0,0.1) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.cards-container.shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.card {
+    width: 180px;
+    height: 261px;
+    perspective: 1000px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.5s ease;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card.selected {
+    z-index: 10;
+}
+
+.card.hide-card {
+    opacity: 0;
+    transform: scale(0.5) translateY(50px);
+    pointer-events: none;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-radius: 12px;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    border: 2px solid #333;
+    overflow: hidden;
+}
+
+.card-front {
+    background-color: #ffffff;
+    transform: rotateY(180deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    border: 2px solid #333;
+    overflow: hidden;
+    background: url('/Cards_Shuffle/back1.png') center center no-repeat;
+    background-color: #000;
+    background-size: 100% 100%;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    display: block;
+    border-radius: 0;
+}
+
+.card-value {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.card-value-bottom {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    align-self: flex-end;
+    transform: rotate(180deg);
+}
+
+.card-number {
+    margin-right: 5px;
+}
+
+.card-suit-image {
+    width: 20px;
+    height: 20px;
+}
+
+.card-center-suit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.card-suit-center {
+    width: 60px;
+    height: 60px;
+}
+
+.red {
+    color: #e60000;
+}
+
+.black {
+    color: #000;
+}
+
+.shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+/* Game phase indicator */
+.game-phase-indicator {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.phase-step {
+    padding: 10px;
+    border-radius: 5px;
+    color: #777;
+    font-weight: bold;
+    position: relative;
+    text-align: center;
+    flex: 1;
+}
+
+.phase-step.active {
+    color: #fff;
+    background-color: #1e3c72;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(30, 60, 114, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(30, 60, 114, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(30, 60, 114, 0);
+    }
+}
+
+/* Bet controls */
+.bet-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+    gap: 15px;
+}
+
+.bet-controls p {
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.bet-controls input {
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    width: 200px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.bet-controls button {
+    padding: 12px 25px;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.bet-controls button:hover {
+    background: linear-gradient(135deg, #2a5298, #1e3c72);
+    transform: translateY(-2px);
+}
+
+.bet-controls button:disabled {
+    background: #666;
+    cursor: not-allowed;
+}
+
+/* Prediction controls */
+.prediction-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.prediction-controls p {
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.prediction-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.up-button, .down-button {
+    padding: 12px 25px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    width: 120px;
+}
+
+.up-button {
+    background: linear-gradient(135deg, #43a047, #2e7d32);
+}
+
+.down-button {
+    background: linear-gradient(135deg, #e53935, #c62828);
+}
+
+.up-button:hover {
+    background: linear-gradient(135deg, #2e7d32, #43a047);
+    transform: translateY(-2px);
+}
+
+.down-button:hover {
+    background: linear-gradient(135deg, #c62828, #e53935);
+    transform: translateY(-2px);
+}
+
+.up-button:disabled, .down-button:disabled {
+    background: #666;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Result display */
+.result-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+.result-display.win {
+    background-color: rgba(67, 160, 71, 0.8);
+    animation: winPulse 1.5s infinite;
+}
+
+.result-display.lose {
+    background-color: rgba(198, 40, 40, 0.8);
+    animation: losePulse 1.5s infinite;
+}
+
+.result-display h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.result-display p {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.play-again-button {
+    padding: 12px 25px;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.play-again-button:hover {
+    background: linear-gradient(135deg, #2a5298, #1e3c72);
+    transform: translateY(-2px);
+}
+
+/* Game stats */
+.game-stats {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 0;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.game-stats div {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Animations */
+@keyframes titlePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes questionPulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 1; }
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+}
+
+@keyframes buttonShine {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+}
+
+@keyframes backgroundShift {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-50%, -50%); }
+}
+
+@keyframes resultAppear {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes cardFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+@keyframes resultPop {
+    0% { transform: scale(0); }
+    80% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes winPulse {
+    0%, 100% {
+        box-shadow: 0 0 30px rgba(67, 160, 71, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 50px rgba(67, 160, 71, 1);
+    }
+}
+
+@keyframes losePulse {
+    0%, 100% {
+        box-shadow: 0 0 30px rgba(198, 40, 40, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 50px rgba(198, 40, 40, 1);
+    }
+}
+
+/* Add a subtle shine effect to cards when hovered */
+.card:hover .card-inner::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%
+    );
+    transform: rotate(45deg);
+    animation: cardShine 2s infinite linear;
+    pointer-events: none;
+    z-index: 10;
+}
+
+@keyframes cardShine {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+}
+
+/* Animation when player wins */
+@keyframes winPulse {
+    0%, 100% {
+        box-shadow: 0 0 30px rgba(67, 160, 71, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 50px rgba(67, 160, 71, 1);
+    }
+}
+
+/* Animation when player loses */
+@keyframes losePulse {
+    0%, 100% {
+        box-shadow: 0 0 30px rgba(198, 40, 40, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 50px rgba(198, 40, 40, 1);
+    }
+}
+
+/* Enhanced selected card animation with exact proportions */
+.card.selected.flipped {
+    transform: scale(1.5) translateY(-50px);
+    box-shadow: 0 15px 40px rgba(255, 215, 0, 0.7);
+    z-index: 20;
+}
+
+/* Add pulsing effect to selected card */
+@keyframes selectedCardPulse {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+    }
+}
+
+.card.selected.flipped {
+    animation: selectedCardPulse 2s infinite;
+}
+
+/* Make sure the flipped card image maintains exact proportions */
+.card.flipped .card-front .card-image {
+    opacity: 1 !important;
+    animation: cardReveal 0.4s ease-in-out forwards;
+}
+
+@keyframes cardReveal {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .cards-container {
+        gap: 10px;
+    }
+    
+    .card {
+        width: 110px;
+        height: 190px;
+    }
+    
+    .card-value, .card-value-bottom {
+        font-size: 18px;
+    }
+    
+    .card-suit-image {
+        width: 15px;
+        height: 15px;
+    }
+    
+    .card-suit-center {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: 140px;
+        height: 190px;
+    }
+    
+    .betting-controls {
+        padding: 1.5rem;
+    }
+    
+    .game-stats {
+        flex-direction: column;
+    }
+    
+    .stat-box {
+        width: 100%;
+    }
+    
+    .shuffle-title {
+        font-size: 2rem;
+    }
+    
+    .result-message {
+        font-size: 1.2rem;
+        padding: 1rem;
+    }
+}
+
+/* Add style for game phase indicator */
+.game-phase-indicator {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    margin: 1rem 0 2rem;
+    padding: 0.5rem 1rem;
+    background: rgba(26, 26, 46, 0.5);
+    border-radius: 15px;
+    position: relative;
+}
+
+.phase-step {
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    position: relative;
+    color: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+.phase-step.active {
+    background: rgba(255, 215, 0, 0.2);
+    color: #FFD700;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.phase-step.completed {
+    color: #5ee077;
+}
+
+.phase-step.completed::after {
+    content: '✓';
+    margin-left: 5px;
+}
+
+/* Selected card container */
+.selected-card-container {
+    display: flex;
+    justify-content: center;
+    margin: 3rem 0;
+    perspective: 2000px;
+    position: relative;
+}
+
+.selected-card {
+    width: 500px !important;
+    height: 726px !important;
+    transform: rotateY(180deg);
+}
+
+.card-value {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.card-number {
+    font-size: 5rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-suit {
+    font-size: 6rem;
+}
+
+.card-value.red {
+    color: #e74c3c;
+}
+
+.card-value.black {
+    color: #1a1a2e;
+}
+
+/* Prediction controls */
+.prediction-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+.prediction-prompt {
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.prediction-buttons {
+    display: flex;
+    gap: 2rem;
+    width: 100%;
+    justify-content: center;
+}
+
+.prediction-button {
+    padding: 1rem 3rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    position: relative;
+    overflow: hidden;
+}
+
+.prediction-button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        transparent 100%
+    );
+    transform: rotate(45deg);
+    animation: buttonShine 3s infinite linear;
+}
+
+.up-button {
+    background: linear-gradient(45deg, #4CAF50, #2E7D32);
+    color: white;
+    box-shadow: 0 4px 15px rgba(46, 125, 50, 0.4);
+}
+
+.up-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.6);
+}
+
+.down-button {
+    background: linear-gradient(45deg, #e53935, #c62828);
+    color: white;
+    box-shadow: 0 4px 15px rgba(198, 40, 40, 0.4);
+}
+
+.down-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(198, 40, 40, 0.6);
+}
+
+.prediction-value {
+    padding: 0.3rem 0.8rem;
+    border-radius: 5px;
+    font-weight: bold;
+    margin: 0 5px;
+}
+
+.result-prediction {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.result-outcome {
+    font-size: 2rem;
+}
+
+.play-again-button {
+    background: linear-gradient(45deg, #7e57c2, #5e35b1);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 1rem 3rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-top: 2rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 15px rgba(94, 53, 177, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.play-again-button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        transparent 100%
+    );
+    transform: rotate(45deg);
+    animation: buttonShine 3s infinite linear;
+}
+
+.play-again-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(94, 53, 177, 0.6);
+}
+
+/* Make the card shine more dramatically when flipped */
+.card.flipped::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+    animation: cardGlow 1.5s forwards;
+    pointer-events: none;
+}
+
+@keyframes cardGlow {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Add dramatic revealed card effect */
+.card.revealed {
+    animation: cardRevealPulse 0.6s ease-in-out;
+}
+
+@keyframes cardRevealPulse {
+    0% { transform: scale(1.3) translateY(-30px); }
+    50% { transform: scale(1.4) translateY(-35px); }
+    100% { transform: scale(1.3) translateY(-30px); }
+}
+
+/* Make selected card more prominent */
+.card.selected.flipped.revealed {
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.8);
+}
+
+/* Add a special effect when the card is flipped to show content */
+.card.flipped .card-image {
+    animation: cardImageReveal 0.5s ease-in-out 0.7s both;
+}
+
+@keyframes cardImageReveal {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* BOOM Animation */
+.boom-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 8rem;
+    font-weight: bold;
+    color: #FFD700;
+    text-shadow: 
+        0 0 10px #FF8C00,
+        0 0 20px #FF4500,
+        0 0 30px #FF0000;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 100;
+    animation: boomEffect 2s ease-in-out;
+}
+
+@keyframes boomEffect {
+    0% {
+        transform: scale(0.1);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* Add loading spinner styles */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 320px;
+    margin: 30px 0;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 215, 0, 0.3);
+    border-radius: 50%;
+    border-top-color: #FFD700;
+    animation: spinner 1s ease-in-out infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spinner {
+    to { transform: rotate(360deg); }
+}
+
+.loading-container p {
+    color: #FFD700;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.force-continue-btn {
+    margin-top: 15px;
+    padding: 8px 15px;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    opacity: 0.8;
+}
+
+.force-continue-btn:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+/* When using Framer Motion for rotation, we need to adjust when elements show */
+.card.flipped .card-back {
+    backface-visibility: hidden;
+    opacity: 0;
+}

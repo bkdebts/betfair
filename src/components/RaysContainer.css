@@ -1,0 +1,77 @@
+/* Main container for the rays and game area */
+.rays-container {
+    position: relative;
+    width: calc(100% + 290px);
+    height: 400px;
+    background-color: #000000;
+    overflow: hidden;
+    border-radius: 12px;
+    margin: 3rem -190px 0;
+    padding-top: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    perspective: 1000;
+}
+
+/* Clean Grey Rays over Black Background */
+.rays-background {
+    position: absolute;
+    top: -300%;
+    left: -300%;
+    width: 700%;
+    height: 700%;
+    background: repeating-conic-gradient(
+        from 0deg at 40% 60%,
+        #1a1a1a 0deg,
+        #1a1a1a 4deg,
+        #000000 4deg,
+        #000000 10deg
+    );
+    filter: blur(1px); /* Reduced blur for better performance */
+    transform-origin: 40% 60%;
+    z-index: 0;
+    will-change: transform; /* Optimize for animation */
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+/* Game area optimization */
+.game-area {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+/* Old code integration - Hidden items */
+.ray-container,
+.rays,
+.rays::after,
+.glow {
+    display: none;
+}
+
+/* Optimized radial shadow */
+.game-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at 0% 100%,
+        transparent 0%,
+        rgba(0, 0, 0, 0.2) 40%,
+        rgba(0, 0, 0, 0.4) 70%,
+        rgba(0, 0, 0, 0.6) 100%
+    );
+    pointer-events: none;
+    will-change: opacity;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}

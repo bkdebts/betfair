@@ -1,0 +1,76 @@
+/* Main container for the rays and game area */
+.rays-container {
+    position: relative;
+    width: calc(100% + 390px);
+    height: 430px;
+    background-color: #000000;
+    overflow: hidden;
+    border-radius: 12px;
+    margin: 3rem -190px 0;
+    padding-top: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* Rays background */
+.rays-background {
+    position: absolute;
+    top: -300%;
+    left: -300%;
+    width: 700%;
+    height: 700%;
+    overflow: hidden;
+    background: repeating-conic-gradient(
+        from 0deg at 40% 60%, 
+        #000000 0deg,
+        #1c1c1c 4deg,
+        #0a0a0a 4deg,
+        #151515 8deg
+    );
+    animation: shiftRays 50s linear infinite;
+    transform-origin: 40% 60%;
+    z-index: 0;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+}
+
+/* Ray rotation animation */
+@keyframes shiftRays {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+/* Game area where plane will be added later */
+.game-area {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.rays {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: radial-gradient(circle at center, transparent 0%, #1a1a1a 70%),
+                repeating-conic-gradient(from 0deg at center,
+                  rgba(255, 165, 0, 0.1) 0deg 10deg,
+                  transparent 10deg 20deg);
+    animation: rotate 60s linear infinite;
+    z-index: 1;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+} 
